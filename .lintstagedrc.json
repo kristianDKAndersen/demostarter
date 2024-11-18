@@ -1,0 +1,4 @@
+{
+    "*.{vue,css,scss}": ["stylelint --fix", "prettier --write"]
+}
+  

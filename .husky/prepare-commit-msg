@@ -1,0 +1,23 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Source the .env file if it exists
+if [ -f .env ]; then
+    # Export all variables from .env, ignoring comments
+    export $(cat .env | grep -v '^#' | xargs)
+fi
+
+# Get the commit message file path
+COMMIT_MSG_FILE=$1
+
+# Check if TASK_ID environment variable exists
+if [ -n "$TASK_ID" ]; then
+    # Get original message
+    TEMP=$(cat "$COMMIT_MSG_FILE")
+    # Write new message with task ID
+    echo "$TASK_ID: $TEMP" > "$COMMIT_MSG_FILE"
+else
+    echo "Error: TASK_ID environment variable is not set"
+    echo "Please set TASK_ID in your .env file"
+    exit 1
+fi
